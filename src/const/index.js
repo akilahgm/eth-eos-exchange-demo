@@ -1,15 +1,22 @@
-export const readHash = "0xf1740222000000000000000000000000000000000000000000000000000000000000000300000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000005";
+export const eosExchangableEscrow = '0x01bEb0a5B6464CE03338FB9506068ea5B62bdd89';
 
-export const wallet1 = '0xd383E9fFd9Fa749a71F7C1d4E08ed67fE00A4214';
-const wallet2 = '0x2E81f5ff999145d13eefae00632dceA1714358e7';
+export const eosExchangableToken = '0x4289D25C329046fbA12AE454766d4c0dbE9C5e5c';
 
-export const token1 = '0x64c76CF875cC7E0Ed023c7EF1af5D1D6c021a0E8';
-const token2 = '0xBbAeFD9e1EB539ba323B44Ab8032eD7eABd175c4';
+export const cordaEscrowContractAddress = '0x2BABb3ea68799Ddcb223bB008543210d8a98C8c7';
 
-export const escrow1 = '0x09F02502254FEB169c20b58C131d45df060dB417';
-const escrow2 = '0x6a2E81fc95C4D938b34EEB4021124f15880BA4d0';
+export const eosOwner = "fypeostest15"
 
-
-export const ethEscrowAddress = "0x09F02502254FEB169c20b58C131d45df060dB417";
-export const ethTokenAddress = "0x64c76CF875cC7E0Ed023c7EF1af5D1D6c021a0E8";
-export const eosTokenAddress = "0xBbAeFD9e1EB539ba323B44Ab8032eD7eABd175c4"
+export const tokenList = [
+    {
+        name:'ROP',
+        address:'0x0BFB6313ee4a51bA62bdd26aADf90F742E385AD5',
+        network:'ropsten',
+        escrow:'0xEe29a3a65d45A82F68a9f6bd995733492deF960C'
+    },
+    {
+        name:'RIN',
+        address:'0xDD66aB4F58a8ddA1dCDc733701713b70a4Ee4b63',
+        network:'rinkeby',
+        escrow:'0xE6556A749E7a1e5C021d4F1ea77056Ac847ea47c'
+    }
+]
