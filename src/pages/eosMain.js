@@ -54,9 +54,9 @@ function EosMain() {
         formatNumber(sendingAmount),
         expectedAmount,
         currentUser.eosKey,
-        receiver.eosKey
+        receiver.eosKey,
+        '0xC79aCcB72a4e6e636A0A31E8f1F8FDacD62051F3'
       );
-      
       setResultLink(`https://rinkeby.etherscan.io/tx/${result}`)
     }
     if (sendingToken === 'EOS') {
@@ -67,7 +67,8 @@ function EosMain() {
         currentUser.ethKey,
         sendingAmount,
         formatNumber(expectedAmount),
-        privateKey
+        privateKey,
+        '0xC79aCcB72a4e6e636A0A31E8f1F8FDacD62051F3'
       );
       setResultLink(`https://kylin.bloks.io/transaction/${result}`)
     }
@@ -81,6 +82,7 @@ function EosMain() {
     setEosTokenBalance(eosBalance);
   };
   const check = async () => {
+    
     const currentUserUid = getCurrentUser().uid;
     const currentUser = await getUserById(currentUserUid);
     if (network === 'ETH') {
@@ -93,7 +95,7 @@ function EosMain() {
     }
   };
 
-  updateBalance();
+  // updateBalance();
   return (
     <div>
       <AppNavBar />

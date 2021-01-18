@@ -1,6 +1,6 @@
 import { escrowABI,EOSEscrowABI } from '../const/abi';
 import axios from 'axios';
-import { tokenList,eosExchangableToken,eosExchangableEscrow } from '../const';
+import { tokenList,eosExchangeEthEscrow,networkList } from '../const';
 import { generateClaimReadHash } from './generateReadHash';
 const Web3 = require('web3');
 const web3 = new Web3();
@@ -31,12 +31,6 @@ export const ethClaim = async (
         `https://${selectedToken.network}.infura.io/v3/98079c61ec6a4c029817d276104753d3`
       )
     );
-
-    let receivingEscrow = tokenList[0].escrow;
-    if (receivingEscrow === sendingEscrow) {
-      receivingEscrow = tokenList[1].escrow;
-    }
-
     const readHash = await generateClaimReadHash(
       ethPublicKey,
       receiverWalletPubKey,
@@ -48,7 +42,7 @@ export const ethClaim = async (
     );
 
     var count = await web3.eth.getTransactionCount(ethPublicKey);
-    var contractAddress = receivingEscrow;
+    var contractAddress = selectedToken.escrow;
     var contract = new web3.eth.Contract(escrowABI, contractAddress);
 
     var gasPrice = await web3.eth.getGasPrice();
@@ -104,14 +98,14 @@ export const ethToEosClaim = async (
   eosSender,
   eosReceiver,
   sendingAmount,
-  receivingAmount
+  receivingAmount,
+  otherTokenAddress
 ) => {
-
   try {
     var Tx = require('ethereumjs-tx').Transaction;
     web3.setProvider(
       new web3.providers.HttpProvider(
-        'https://rinkeby.infura.io/v3/98079c61ec6a4c029817d276104753d3'
+        `https://${eosExchangeEthEscrow.network}.infura.io/v3/98079c61ec6a4c029817d276104753d3`
       )
     );
 
@@ -122,13 +116,13 @@ export const ethToEosClaim = async (
       ethSender,
       ethReceiver,
       sendingAmount,
-      eosExchangableToken,
+      otherTokenAddress,
       receivingAmount,
       exchangeId
     ];
 
     var count = await web3.eth.getTransactionCount(ethReceiver);
-    var contractAddress = eosExchangableEscrow;
+    var contractAddress = eosExchangeEthEscrow.address;
     var contract = new web3.eth.Contract(EOSEscrowABI, contractAddress);
 
     var gasPrice = await web3.eth.getGasPrice();
@@ -150,7 +144,7 @@ export const ethToEosClaim = async (
 
     var privKey = new Buffer(ethPrivateKey.toUpperCase(), 'hex');
     var tx = new Tx(rawTransaction, {
-      chain: 'rinkeby',
+      chain: eosExchangeEthEscrow.network,
       hardfork: 'petersburg',
     });
 
@@ -160,7 +154,7 @@ export const ethToEosClaim = async (
 
     let hexTx = '0x' + serializedTx.toString('hex');
     const resp = await axios.post(
-      'https://rinkeby.infura.io/v3/98079c61ec6a4c029817d276104753d3',
+      `https://${eosExchangeEthEscrow.network}.infura.io/v3/98079c61ec6a4c029817d276104753d3`,
       {
         jsonrpc: '2.0',
         id: 1,

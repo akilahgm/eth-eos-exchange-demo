@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { EOSEscrowABI } from '../const/abi';
-import { eosExchangableEscrow,eosOwner } from '../const';
+import { eosOwner,eosExchangeEthEscrow } from '../const';
 import {checkCorrespondingId} from './ethServices'
 
 const Web3 = require('web3');
@@ -53,11 +53,11 @@ return false
 export const findByPubKey = async (key)=>{
     web3.setProvider(
         new web3.providers.HttpProvider(
-          'https://rinkeby.infura.io/v3/98079c61ec6a4c029817d276104753d3'
+          `https://${eosExchangeEthEscrow.network}.infura.io/v3/98079c61ec6a4c029817d276104753d3`
         )
       );
     
-    var contract = new web3.eth.Contract(EOSEscrowABI, eosExchangableEscrow);
+    var contract = new web3.eth.Contract(EOSEscrowABI, eosExchangeEthEscrow.address);
     let list = []
     list =await getExchangeList()
     const tempList = []

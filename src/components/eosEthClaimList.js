@@ -36,7 +36,8 @@ export const EosEthClaimListView = ({ claim, network }) => {
         data.eos_sender,
         data.eos_receiver,
         data.eos_asset,
-        data.other_value
+        data.other_value,
+        data.other_token
       );
     }
   };

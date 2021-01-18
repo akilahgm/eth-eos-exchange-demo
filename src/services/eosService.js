@@ -1,5 +1,5 @@
 import { TextDecoder, TextEncoder } from 'text-encoding';
-import { eosExchangableEscrow, eosExchangableToken,eosOwner } from '../const';
+import { eosOwner,eosExchangeEthEscrow } from '../const';
 import axios from 'axios';
 const { Api, JsonRpc, RpcError } = require('eosjs');
 const { JsSignatureProvider } = require('eosjs/dist/eosjs-jssig'); // development only
@@ -13,7 +13,8 @@ export const transferEos = async (
   ethReceiver,
   eosAmount,
   ethAmount,
-  privateKey
+  privateKey,
+  expectingTokenAddress
 ) => {
   try {
     const signatureProvider = new JsSignatureProvider([privateKey]);
@@ -44,10 +45,10 @@ export const transferEos = async (
               other_sender: ethSender,
               other_receiver: ethReceiver,
               eos_asset: eosAmount + ' FYP',
-              other_token: eosExchangableToken,
+              other_token: expectingTokenAddress,
               other_value: ethAmount,
-              escrow_address: eosExchangableEscrow,
-              ipfs_hash: 'QmZu1dcNRVSUnK6WyEJADFDU2z11XYLWoeAETkxJfEiks6',
+              escrow_address: eosExchangeEthEscrow.address,
+              ipfs_hash: eosExchangeEthEscrow.transferHash,
             },
           },
         ],
@@ -92,8 +93,8 @@ export const claim = async (privateKey, senderEosKey, exchangeId) => {
             ],
             data: {
               exchange_id: exchangeId,
-              escrow_address: eosExchangableEscrow,
-              ipfs_hash: 'QmPHHDW32TYw5WbPenTffRSH5ZYVhecmrnAVMpAfT1f5da',
+              escrow_address: eosExchangeEthEscrow.address,
+              ipfs_hash: eosExchangeEthEscrow.claimHash,
             },
           },
         ],
@@ -155,8 +156,8 @@ export const eosRefund = async (privateKey, senderEosKey, exchangeId) => {
             ],
             data: {
               exchange_id: exchangeId,
-              escrow_address: eosExchangableEscrow,
-              ipfs_hash: 'Qmar8Tbwrsbd4UwhkVsVTtc9XNtc9j7CZ5JVJRKntFqaDK',
+              escrow_address: eosExchangeEthEscrow.address,
+              ipfs_hash: eosExchangeEthEscrow.refundHash,
             },
           },
         ],

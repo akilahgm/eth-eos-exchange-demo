@@ -1,22 +1,63 @@
-export const eosExchangableEscrow = '0x01bEb0a5B6464CE03338FB9506068ea5B62bdd89';
+export const eosExchangableEscrow = '0xFc98772F21aF15A3af8f56B97CAF3D35168Ab5c8';
 
-export const eosExchangableToken = '0x4289D25C329046fbA12AE454766d4c0dbE9C5e5c';
+export const eosExchangeEthEscrow = {
+    address:'0xFc98772F21aF15A3af8f56B97CAF3D35168Ab5c8',
+    network:'ropsten',
+    transferHash:'Qmc1CYh73qGEBWkdATxmWBDbjaq79SQYutsghrhALDzLw1',
+    claimHash:'QmUDEe7S78JBhXgsXYwqtbhZrUT5CTfwNBPWGDJAmvzzuj',
+    refundHash:'QmcxBzk8xuKVk1EbPTf6CfMcpkcyfgLtimCufCbaUPX1jh'
+}
+
+export const eosExchangableToken = '0x497cA4BE7Ff0e665D4380c987FFfA40dE7e9846d';
 
 export const cordaEscrowContractAddress = '0x2BABb3ea68799Ddcb223bB008543210d8a98C8c7';
 
 export const eosOwner = "fypeostest15"
 
-export const tokenList = [
+export const networks = {
+    ropsten:'0x9D3129D06f9Ba944152a524f3C7206a86F884FcC',
+    rinkeby:'0xfeD595C0AF2b985f72a2aa4f8787EFf958253660'
+}
+
+export const networkList = [
     {
-        name:'ROP',
-        address:'0x0BFB6313ee4a51bA62bdd26aADf90F742E385AD5',
-        network:'ropsten',
-        escrow:'0xEe29a3a65d45A82F68a9f6bd995733492deF960C'
+        name:'ropsten',
+        address:networks.ropsten
     },
     {
-        name:'RIN',
-        address:'0xDD66aB4F58a8ddA1dCDc733701713b70a4Ee4b63',
-        network:'rinkeby',
-        escrow:'0xE6556A749E7a1e5C021d4F1ea77056Ac847ea47c'
+        name:'rinkeby',
+        address:networks.rinkeby
     }
 ]
+
+export const tokenList = [
+    {
+        name:'ROP-TOKEN1',
+        address:'0x497cA4BE7Ff0e665D4380c987FFfA40dE7e9846d',
+        network:'ropsten',
+        escrow:networks.ropsten
+    },
+    {
+        name:'ROP-TOKEN2',
+        address:'0xA5c1B134aFE3804566B6235dBD52b8D903Db2A7F',
+        network:'ropsten',
+        escrow:networks.ropsten
+    },
+    {
+        name:'RIN-TOKEN1',
+        escrow:networks.rinkeby,
+        network:'rinkeby',
+        address:'0xC79aCcB72a4e6e636A0A31E8f1F8FDacD62051F3'
+    },
+    {
+        name:'RIN-TOKEN2',
+        escrow:networks.rinkeby,
+        network:'rinkeby',
+        address:'0x669EA3d3f5f0B925DCE590500F2CC73e98cef198'
+    }
+]
+
+//old ipfs hashes
+// transfer :'QmZu1dcNRVSUnK6WyEJADFDU2z11XYLWoeAETkxJfEiks6'
+// claim :'QmPHHDW32TYw5WbPenTffRSH5ZYVhecmrnAVMpAfT1f5da'
+// refund : 'Qmar8Tbwrsbd4UwhkVsVTtc9XNtc9j7CZ5JVJRKntFqaDK'

@@ -39,7 +39,7 @@ export const AppNavBar = ()=>{
           </Typography>
           <Tabs>
             <Tab label="Eth to Eth" onClick={()=>{history.push('/');}}/>
-            <Tab label="Eth to EOS" onClick={()=>{history.push('/eth-eos');}}/>
+            {/* <Tab label="Eth to EOS" onClick={()=>{history.push('/eth-eos');}}/> */}
             <Tab label="Corda Demo" onClick={()=>{history.push('/corda');}}/>
         </Tabs>
           <Button color="inherit" onClick={logout}>

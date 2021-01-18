@@ -1,5 +1,5 @@
 import { escrowABI,eosExchangableTokenABI,EOSEscrowABI } from '../const/abi';
-import { tokenList, eosExchangableEscrow } from '../const';
+import { networkList,eosExchangeEthEscrow } from '../const';
 import {findByExchangeKey,checkCorrespondingIdEos} from './eosExchangeTable'
 const Web3 = require('web3');
 
@@ -8,31 +8,31 @@ export const getExchangeIds = async (escrowAddress, walletPubKey) => {
   const web32 = new Web3();
   
 
-  let escrowAddress2 = tokenList[0].escrow;
+  let escrowAddress2 = networkList[0].address;
   if (escrowAddress2 === escrowAddress) {
-    escrowAddress2 = tokenList[1].escrow;
+    escrowAddress2 = networkList[1].address;
   }
-  let token1 = null;
-    for (const token of tokenList) {
-      if (token.escrow === escrowAddress) {
-        token1 = token;
+  let network1 = null;
+    for (const network of networkList) {
+      if (network.address === escrowAddress) {
+        network1 = network.name;
       }
     }
-    let token2 = null;
-    for (const token of tokenList) {
-      if (token.escrow === escrowAddress2) {
-        token2 = token;
+    let network2 = null;
+    for (const network of networkList) {
+      if (network.address=== escrowAddress2) {
+        network2 = network.name;
       }
     }
-
+    
   web3.setProvider(
     new web3.providers.HttpProvider(
-      `https://${token1.network}.infura.io/v3/98079c61ec6a4c029817d276104753d3`
+      `https://${network1}.infura.io/v3/98079c61ec6a4c029817d276104753d3`
     )
   );
   web32.setProvider(
     new web3.providers.HttpProvider(
-      `https://${token2.network}.infura.io/v3/98079c61ec6a4c029817d276104753d3`
+      `https://${network2}.infura.io/v3/98079c61ec6a4c029817d276104753d3`
     )
   );
   var contract = new web3.eth.Contract(escrowABI, escrowAddress);
@@ -41,6 +41,7 @@ export const getExchangeIds = async (escrowAddress, walletPubKey) => {
   let exchangeIds = await contract.methods
     .getExchangeIds(walletPubKey)
     .call();
+
     console.log('Ids',exchangeIds)
 
     // exchangeIds.reverse()
@@ -127,12 +128,12 @@ export const getEthExchanges = async (walletPubKey) => {
   const web3 = new Web3();
   web3.setProvider(
     new web3.providers.HttpProvider(
-      'https://rinkeby.infura.io/v3/98079c61ec6a4c029817d276104753d3'
+      `https://${eosExchangeEthEscrow.network}.infura.io/v3/98079c61ec6a4c029817d276104753d3`
     )
   );
-
-  var contract = new web3.eth.Contract(EOSEscrowABI, eosExchangableEscrow);
-
+  
+  var contract = new web3.eth.Contract(EOSEscrowABI, eosExchangeEthEscrow.address);
+  console.log('Comes here++++++++++++++++++++++++++++++++++++++')
   const exchangeIds = await contract.methods
     .getExchangeIds(walletPubKey)
     .call();
