@@ -15,8 +15,8 @@ export const cordaEscrowContractAddress = '0x2BABb3ea68799Ddcb223bB008543210d8a9
 export const eosOwner = "fypeostest15"
 
 export const networks = {
-    ropsten:'0x9D3129D06f9Ba944152a524f3C7206a86F884FcC',
-    rinkeby:'0xfeD595C0AF2b985f72a2aa4f8787EFf958253660'
+    ropsten:'0x2c0afd7eBfB625d73c5535D9A9bf4D843f588EC3',
+    rinkeby:'0xDF2C46Fdb4cAc5C98338c1366FD72ed11749952a'
 }
 
 export const networkList = [
