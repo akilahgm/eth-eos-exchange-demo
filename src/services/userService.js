@@ -15,7 +15,7 @@ export const saveUser = async (uid,data)=>{
 }
 export const createAccount = async (uid,accountName)=>{
   console.log('Create account',{uid,accountName})
-  await axios.post('http://54.85.244.163:10009/api/account',{
+  await axios.post('http://20.42.117.153:10009/api/account',{
     "accountName" :accountName
 })
   await firebase.database().ref('user/'+uid).child('account').push(accountName)
@@ -23,7 +23,7 @@ export const createAccount = async (uid,accountName)=>{
 export const getAccountBalance = async (accountName)=>{
   try{
     console.log('Get account balance',{accountName})
-    const result = await axios.get('http://54.85.244.163:10009/api/account-balance?accountName='+accountName)
+    const result = await axios.get('http://20.42.117.153:10009/api/account-balance?accountName='+accountName)
     console.log('Account balance',result.data)
     return result.data
   }catch(e){

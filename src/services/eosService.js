@@ -1,5 +1,5 @@
 import { TextDecoder, TextEncoder } from 'text-encoding';
-import { eosOwner,eosExchangeEthEscrow } from '../const';
+import { eosOwner,eosExchangeEthEscrow,eosEndpoint } from '../const';
 import axios from 'axios';
 const { Api, JsonRpc, RpcError } = require('eosjs');
 const { JsSignatureProvider } = require('eosjs/dist/eosjs-jssig'); // development only
@@ -19,7 +19,7 @@ export const transferEos = async (
   try {
     const signatureProvider = new JsSignatureProvider([privateKey]);
 
-    const rpc = new JsonRpc('https://kylin.eosn.io', { fetch });
+    const rpc = new JsonRpc(eosEndpoint, { fetch });
 
     const api = new Api({
       rpc,
@@ -70,7 +70,7 @@ export const claim = async (privateKey, senderEosKey, exchangeId) => {
     const defaultPrivateKey = privateKey; // bob
     const signatureProvider = new JsSignatureProvider([defaultPrivateKey]);
 
-    const rpc = new JsonRpc('https://kylin.eosn.io', { fetch });
+    const rpc = new JsonRpc(eosEndpoint, { fetch });
 
     const api = new Api({
       rpc,
@@ -113,7 +113,7 @@ export const claim = async (privateKey, senderEosKey, exchangeId) => {
 export const getEosTokenBalance = async (accountAddress) => {
   try {
     const resp = await axios.post(
-      'https://kylin.eosn.io/v1/chain/get_currency_balance',
+      `${eosEndpoint}/v1/chain/get_currency_balance`,
       {
         code: eosOwner,
         symbol: 'FYP',
@@ -133,7 +133,7 @@ export const eosRefund = async (privateKey, senderEosKey, exchangeId) => {
     const defaultPrivateKey = privateKey; // bob
     const signatureProvider = new JsSignatureProvider([defaultPrivateKey]);
 
-    const rpc = new JsonRpc('https://kylin.eosn.io', { fetch });
+    const rpc = new JsonRpc(eosEndpoint, { fetch });
 
     const api = new Api({
       rpc,

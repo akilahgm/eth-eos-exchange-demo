@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { EOSEscrowABI } from '../const/abi';
-import { eosOwner,eosExchangeEthEscrow } from '../const';
+import { eosOwner,eosExchangeEthEscrow, eosEndpoint} from '../const';
 import {checkCorrespondingId} from './ethServices'
 
 const Web3 = require('web3');
@@ -9,7 +9,7 @@ const web3 = new Web3();
 export const getExchangeList = async () => {
   try{
     const resp = await axios.post(
-        'https://kylin.eosn.io/v1/chain/get_table_rows',
+        `${eosEndpoint}/v1/chain/get_table_rows`,
         {
           code: eosOwner,
           table: 'exchanges',
@@ -25,6 +25,7 @@ export const getExchangeList = async () => {
       return data
   }catch(err){
       console.log('Error happen while getting transaction list')
+      return []
   }
 };
 
@@ -43,7 +44,7 @@ export const checkCorrespondingIdEos = async (correspondingId)=>{
   let list = []
   list = await getExchangeList()
   for (const iterator of list) {
-    if('+++++++++++++++++++',iterator.corresponding_id ===correspondingId){
+    if(iterator.corresponding_id ===correspondingId){
       return true
     }
 }

@@ -24,7 +24,7 @@ export const getExchangeIds = async (escrowAddress, walletPubKey) => {
         network2 = network.name;
       }
     }
-    
+    console.log('*********************')
   web3.setProvider(
     new web3.providers.HttpProvider(
       `https://${network1}.infura.io/v3/98079c61ec6a4c029817d276104753d3`

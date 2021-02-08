@@ -13,6 +13,8 @@ export const eosExchangableToken = '0x497cA4BE7Ff0e665D4380c987FFfA40dE7e9846d';
 export const cordaEscrowContractAddress = '0x2BABb3ea68799Ddcb223bB008543210d8a98C8c7';
 
 export const eosOwner = "fypeostest15"
+export const eosEndpoint ='https://eos.greymass.com'
+//https://kylin.eosn.io
 
 export const networks = {
     ropsten:'0x2c0afd7eBfB625d73c5535D9A9bf4D843f588EC3',
