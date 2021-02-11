@@ -14,10 +14,15 @@ export const getExchangeList = async () => {
           code: eosOwner,
           table: 'exchanges',
           scope: eosOwner,
-          index_position: 'primary',
+          index_position: '1',
           key_type: 'name',
           json: true,
           limit: 10000,
+        },
+        {
+          headers:{
+            'Content-Type':'application/json',
+          }
         }
       );
       const data = resp.data.rows

@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: 10,
     margin: 20,
-    background: '#9AEEF1',
+    background: '#fff',
     marginBottom: 30,
     width:500
   },

@@ -19,13 +19,19 @@ import {
   getEthBalance,
 } from '../services/ethServices';
 import { transferEos, getEosTokenBalance } from '../services/eosService';
-import { getCurrentUser, getUserById,createAccount,getAccount,getAccountBalance } from '../services/userService';
+import {
+  getCurrentUser,
+  getUserById,
+  createAccount,
+  getAccount,
+  getAccountBalance,
+} from '../services/userService';
 import { formatNumber } from '../services/sharedService';
 import { getEthExchanges } from '../services/getExchangeIds';
 import { CordaExchangeList } from '../components/cordaExchangeList';
 import { AppNavBar } from '../components/appBar';
 import { findByPubKey } from '../services/eosExchangeTable';
-import {getExchanges,buyShares} from '../services/cordaService'
+import { getExchanges, buyShares } from '../services/cordaService';
 
 function CordaMain() {
   const styles = useStyles();
@@ -43,87 +49,114 @@ function CordaMain() {
   const [cordaTokenBalance, setCordaTokenBalance] = useState(0);
   const [ethTokenBalance, setEthTokenBalance] = useState(0);
 
-  const createNewAccount = async ()=>{
+  const createNewAccount = async () => {
     const currentUserUid = getCurrentUser().uid;
-    await createAccount(currentUserUid, createAccountName)
-    
-  }
-  const exchange = async () => {
-    setResultLink(undefined)
-    const currentUserUid = getCurrentUser().uid;
-    const currentUser = await getUserById(currentUserUid);
-    const id = await buyShares(currentUser.ethKey,privateKey,sendingEthAmount,userAccount,expectedShares)
-    setResultLink('https://rinkeby.etherscan.io/tx/'+id)
+    await createAccount(currentUserUid, createAccountName);
   };
-  
-  const updateBalance = async () => {
-    
+  const exchange = async () => {
+    setResultLink(undefined);
     const currentUserUid = getCurrentUser().uid;
     const currentUser = await getUserById(currentUserUid);
-    const accountArray = []
-    
+    const id = await buyShares(
+      currentUser.ethKey,
+      privateKey,
+      sendingEthAmount,
+      userAccount,
+      expectedShares
+    );
+    setResultLink('https://rinkeby.etherscan.io/tx/' + id);
+  };
+
+  const updateBalance = async () => {
+    const currentUserUid = getCurrentUser().uid;
+    const currentUser = await getUserById(currentUserUid);
+    const accountArray = [];
+
     for (const iterator of Object.keys(currentUser.account)) {
-        console.log(currentUser.account[iterator])
-        accountArray.push({name:currentUser.account[iterator],key:iterator})
+      console.log(currentUser.account[iterator]);
+      accountArray.push({ name: currentUser.account[iterator], key: iterator });
     }
-    setAccounts(accountArray)
+    setAccounts(accountArray);
     const ethBalance = await getEthBalance(currentUser.ethKey);
     setEthTokenBalance(ethBalance);
 
-    const cordaBalance = await getAccountBalance(selectedCordaAccount)
+    const cordaBalance = await getAccountBalance(selectedCordaAccount);
     setCordaTokenBalance(cordaBalance);
   };
   const check = async () => {
     updateBalance();
     const currentUserUid = getCurrentUser().uid;
     const currentUser = await getUserById(currentUserUid);
-    
-    const claimRes =await getExchanges(currentUser.ethKey)
+
+    const claimRes = await getExchanges(currentUser.ethKey);
     setClaim(claimRes);
   };
 
   // updateBalance();
   return (
-    <div>
+    <div style={{ background: '#f7f7f7' }}>
       <AppNavBar />
       <Grid container spacing={3}>
-        <Grid item xs={9}>
-          <Container fluid>
-            <Row style={{ margin: 10, marginTop: 20 }}>
-              <InputLabel id="demo-simple-select-outlined-label">
-                Create Account
-              </InputLabel>
-            </Row>
-            <Row style={{ margin: 0 }}>
-              <Col>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="account"
-                  label="Account name"
-                  name="account"
-                  autoComplete="account"
-                  autoFocus
-                  size="small"
-                  onChange={(event) => setCreateAccountName(event.target.value.trim())}
-                />
-              </Col>
-              <Col style={{ justifyContent: 'center' }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{ alignContent: 'center', justifyContent: 'center' }}
-                  onClick={createNewAccount}
-                >
-                  Create
-                </Button>
-              </Col>
-            </Row>
-          </Container>
+        <Grid item xs={9} style={{ marginLeft: 30, marginTop: 15 }}>
+          <Paper
+            style={{
+              alignContent: 'center',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 500,
+              paddingTop: 3,
+              paddingBottom:18
+            }}
+            elevation={3}
+          >
+            <Container fluid>
+              <Row style={{ margin: 10, marginTop: 20 }}>
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Create Account
+                </InputLabel>
+              </Row>
+              <Row style={{ margin: 0 }}>
+                <Col>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="account"
+                    label="Account name"
+                    name="account"
+                    autoComplete="account"
+                    autoFocus
+                    size="small"
+                    onChange={(event) =>
+                      setCreateAccountName(event.target.value.trim())
+                    }
+                  />
+                </Col>
+                <Col style={{ justifyContent: 'center' }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ alignContent: 'center', justifyContent: 'center' }}
+                    onClick={createNewAccount}
+                  >
+                    Create
+                  </Button>
+                </Col>
+              </Row>
+            </Container>
+          </Paper>
         </Grid>
-        <Grid item xs={8} style={{ marginLeft: 10 }}>
-          <Paper className={styles.paper} style={{ alignContent: 'flex-end' }}>
+
+        <Grid item xs={8} style={{ marginLeft: 30 }}>
+          <Paper
+            className={styles.paper}
+            style={{
+              alignContent: 'center',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            elevation={3}
+          >
             <FormControl
               variant="outlined"
               className={styles.textBox}
@@ -142,12 +175,15 @@ function CordaMain() {
                 }}
                 label="Sending Token"
               >
-                {
-                    accounts?accounts.map((account)=>{
-                        return (<MenuItem value={account.name} key = {account.key}>{account.name}</MenuItem>)
-                    }):null
-                }
-                
+                {accounts
+                  ? accounts.map((account) => {
+                      return (
+                        <MenuItem value={account.name} key={account.key}>
+                          {account.name}
+                        </MenuItem>
+                      );
+                    })
+                  : null}
               </Select>
             </FormControl>
             <FormControl
@@ -157,7 +193,7 @@ function CordaMain() {
               margin="normal"
             >
               <InputLabel id="demo-simple-select-outlined-label">
-                Select Share
+                Token to Purchase
               </InputLabel>
               <Select
                 labelId="demo-simple-select-outlined-label"
@@ -180,28 +216,35 @@ function CordaMain() {
               required
               fullWidth
               id="expectingShares"
-              label="Number of shares"
+              label="Number of tokens"
               name="expectingShares"
               autoComplete="expectingShares"
               autoFocus
               className={styles.textBox}
               size="small"
               onChange={(event) => {
-                setExpectedShares(event.target.value.trim())
-                setSendingEthAmount(Number(event.target.value.trim())*0.01)
+                setExpectedShares(event.target.value.trim());
+                const ethVal =
+                  Math.round(
+                    (Number(event.target.value.trim()) * 0.01 +
+                      Number.EPSILON) *
+                      100
+                  ) / 100;
+                setSendingEthAmount(ethVal);
               }}
             />
             <TextField
-              variant="outlined"
+              variant="filled"
               margin="normal"
               required
               fullWidth
-              disabled = {true}
+              disabled
+              defaultValue={0}
               id="expectedAmount"
-              title={"Expected Ethereum Balance"}
+              title={'Expected Ethereum Balance'}
               name="expectedAmount"
-              // autoFocus={true}
-              value={sendingEthAmount}
+              label="Ethereum amount"
+              value={sendingEthAmount ? sendingEthAmount + ' ETH' : 0}
               className={styles.textBox}
               size="small"
             />
@@ -241,7 +284,7 @@ function CordaMain() {
                   window.open(resultLink, '_blank');
                 }}
               >
-                View Result
+                View Transaction
               </Button>
             ) : null}
           </Paper>
@@ -262,65 +305,63 @@ function CordaMain() {
                 Eth Balance
                 <br /> {ethTokenBalance}
               </Col>
-              
             </Row>
-            <Row style={{
+            <Row
+              style={{
                 height: 60,
                 alignContent: 'center',
                 textAlign: 'center',
                 borderWidth: '2px',
                 borderColor: '#aaaaaa',
                 borderStyle: 'solid',
-              }}>
-            <Col>
-              <Select
-                labelId="demo-simple-select-outlined-label"
-                id="demo-simple-select-outlined"
-                value={selectedCordaAccount}
-                onChange={(event) => {
-                  setSelectedCordaAccount(event.target.value);
-                }}
-                label="Sending Token"
-              >
-                {
-                    accounts?accounts.map((account)=>{
-                        return (<MenuItem value={account.name} key = {account.key}>{account.name}</MenuItem>)
-                    }):null
-                }
-                
-              </Select>
-              Account Balance
-              <br /> {cordaTokenBalance}
+              }}
+            >
+              <Col>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={selectedCordaAccount}
+                  onChange={(event) => {
+                    setSelectedCordaAccount(event.target.value);
+                  }}
+                  label="Sending Token"
+                >
+                  {accounts
+                    ? accounts.map((account) => {
+                        return (
+                          <MenuItem value={account.name} key={account.key}>
+                            {account.name}
+                          </MenuItem>
+                        );
+                      })
+                    : null}
+                </Select>
+                Account Balance
+                <br /> {cordaTokenBalance}
               </Col>
             </Row>
           </Container>
         </Grid>
       </Grid>
-      <Paper>
-        
         <Button
           variant="contained"
           color="primary"
           style={{ marginTop: 19, marginLeft: 60 }}
           onClick={check}
         >
-          Check
+          Refresh
         </Button>
-        <FormGroup row>
+        <FormGroup style={{ background: '#f7f7f7' }} row>
           <List dense={true}>
             {claims
               ? claims.map((claim) => {
                   return (
-                    <CordaExchangeList
-                      claim={claim}
-                      key={claim.exchangeId}
-                    />
+                    <CordaExchangeList claim={claim} key={claim.exchangeId} />
                   );
                 })
               : null}
           </List>
         </FormGroup>
-      </Paper>
     </div>
   );
 }
@@ -334,12 +375,14 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     color: theme.palette.text.secondary,
     width: 500,
-    paddingBottom: 100,
+    paddingBottom: 25,
+    marginBottom:20
   },
   textBox: {
     width: 400,
     height: 20,
     marginBottom: 20,
+    alignContent: 'center',
   },
   formControl: {
     margin: theme.spacing(1),
