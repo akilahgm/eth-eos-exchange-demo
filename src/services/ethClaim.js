@@ -72,7 +72,7 @@ export const ethClaim = async (
     var serializedTx = tx.serialize();
 
     let hexTx = '0x' + serializedTx.toString('hex');
-    const resp = await axios.post(
+    const {data} = await axios.post(
       `https://${selectedToken.network}.infura.io/v3/98079c61ec6a4c029817d276104753d3`,
       {
         jsonrpc: '2.0',
@@ -82,8 +82,8 @@ export const ethClaim = async (
       }
     );
 
-    console.log('Result', resp);
-    return resp;
+    console.log('Result', data);
+    return `https://${selectedToken.network}.etherscan.io/tx/${data.result?data.result:''}`
   } catch (err) {
     console.log('Error', err);
   }
@@ -110,7 +110,7 @@ export const ethToEosClaim = async (
     );
 
     const stringArg = [
-      'QmYYJGZHGshpnbAimds1d1q9gq35x2cDP3uiJstp3g1Pya',
+      eosExchangeEthEscrow.claimHash,
       eosSender,
       eosReceiver,
       ethSender,
@@ -153,7 +153,7 @@ export const ethToEosClaim = async (
     var serializedTx = tx.serialize();
 
     let hexTx = '0x' + serializedTx.toString('hex');
-    const resp = await axios.post(
+    const {data} = await axios.post(
       `https://${eosExchangeEthEscrow.network}.infura.io/v3/98079c61ec6a4c029817d276104753d3`,
       {
         jsonrpc: '2.0',
@@ -163,8 +163,8 @@ export const ethToEosClaim = async (
       }
     );
 
-    console.log('Result', resp);
-    return resp;
+    console.log('Result', data);
+    return `https://${eosExchangeEthEscrow.network}.etherscan.io/tx/${data.result?data.result:''}`;
   } catch (err) {
     console.log('Error', err);
   }

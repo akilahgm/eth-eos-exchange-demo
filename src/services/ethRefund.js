@@ -71,7 +71,7 @@ export const ethToEthRefund = async (
     var serializedTx = tx.serialize();
 
     let hexTx = '0x' + serializedTx.toString('hex');
-    const resp = await axios.post(
+    const {data} = await axios.post(
       `https://${selectedToken.network}.infura.io/v3/98079c61ec6a4c029817d276104753d3`,
       {
         jsonrpc: '2.0',
@@ -80,9 +80,8 @@ export const ethToEthRefund = async (
         params: [hexTx],
       }
     );
-
-    console.log('Result', resp);
-    return resp;
+    console.log('Result', data);
+    return `https://${selectedToken.network}.etherscan.io/tx/${data.result?data.result:''}`;
   } catch (err) {
     console.log('Error', err);
   }

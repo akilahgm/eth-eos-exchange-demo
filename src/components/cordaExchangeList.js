@@ -20,7 +20,6 @@ export const CordaExchangeList = ({ claim }) => {
   const [privateKey, setPrivateKey] = useState(undefined);
 
   const refundFunction = async (data) => {
-    console.log(data)
     const currentUserUid = getCurrentUser().uid;
     const currentUser = await getUserById(currentUserUid);
     await requestRefund(currentUser.ethKey,privateKey,claim.exchangeId)
@@ -99,6 +98,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 20,
     background: '#fff',
     marginBottom: 30,
-    width:500
+    width:500,
+    minHeight:120
   },
 }));

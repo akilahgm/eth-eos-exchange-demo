@@ -33,14 +33,12 @@ export const getAccountBalance = async (accountName)=>{
 }
 
 export const getAccount = async (uid)=>{
-  console.log('Get account',{uid})
   return new Promise((resolve, reject) => {
     const db = firebase.database();
     const ref = db.ref('user/account'+uid);
     ref.on(
       'value',
       snapshot => {
-        console.log('***********DATA RETRIEVE FROM DATABASE***********', snapshot.val());
         resolve(snapshot.val());
       },
       errorObject => {
@@ -57,7 +55,6 @@ export const getUserById = (uid)=>{
         ref.on(
           'value',
           snapshot => {
-            console.log('***********DATA RETRIEVE FROM DATABASE***********', snapshot.val());
             resolve(snapshot.val());
           },
           errorObject => {

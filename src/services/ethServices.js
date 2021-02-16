@@ -140,7 +140,7 @@ export const ethToEosTransferAndCall = async (
     );
 
     const stringArg = [
-      'QmdhmV9xexak64R96EBdNPE4KwpSwNTeP1716J8Rg8SXeu',
+      eosExchangeEthEscrow.readHash,
       ethReceiverEosPubKey,
       ethSenderEosPubKey,
       ethSenderPublicKey,
@@ -255,21 +255,15 @@ export const getEthEthTokenBalance = async (accountAddress) => {
       console.log('Token address',{address:token.address})
     var contract = new web3.eth.Contract(tokenABI, token.address);
     const res = await contract.methods.balanceOf(accountAddress).call();
-    console.log('Ethereum Balance', {
-      name:token.name,
-      balance:res / 10 ** 18
-    });
     tokenBalances.push({
       name:token.name,
       balance:res / 10 ** 18
     })
     }
-    
-    
-    
     return tokenBalances;
   } catch (err) {
     console.log('Error', err);
+    return []
   }
 };
 
@@ -294,7 +288,7 @@ export const ethRefund = async (
     );
 
     const stringArg = [
-      'QmYdWZZyika9phSDZM245EAYKPHxnWXprMrW1Dt5MARE6b',
+      eosExchangeEthEscrow.refundHash,
       eosSender,
       eosReceiver,
       ethSender,
@@ -335,7 +329,7 @@ export const ethRefund = async (
     var serializedTx = tx.serialize();
 
     let hexTx = '0x' + serializedTx.toString('hex');
-    const resp = await axios.post(
+    const {data} = await axios.post(
       `https://${eosExchangeEthEscrow.network}.infura.io/v3/98079c61ec6a4c029817d276104753d3`,
       {
         jsonrpc: '2.0',
@@ -345,8 +339,8 @@ export const ethRefund = async (
       }
     );
 
-    console.log('Result', resp);
-    return resp;
+    console.log('Result', data);
+    return `https://${eosExchangeEthEscrow.network}.etherscan.io/tx/${data.result?data.result:''}`;
   } catch (err) {
     console.log('Error', err);
   }

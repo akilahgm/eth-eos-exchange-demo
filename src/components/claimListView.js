@@ -16,9 +16,7 @@ import {ethRefund} from '../services/ethServices'
 export const ClaimListView = ({ claim, network }) => {
   const classes = useStyles();
   const [privateKey, setPrivateKey] = useState(undefined);
-  console.log('CLAIM VIEW', claim);
   const claimFunction = async (data) => {
-    console.log('Claim', data);
     const currentUserUid = getCurrentUser().uid;
     const currentUser = await getUserById(currentUserUid);
     if (network === 'ETH') {
@@ -116,7 +114,7 @@ export const ClaimListView = ({ claim, network }) => {
             ? claim.expectedAsset
             : claim.expectedAmount / 10 ** 18}
         </Grid>
-        {claim.statusMsg === 'NEED_TO_CLAIM' ? (
+        {claim.statusMsg === 'PROCESSED' ? (
           <>
             <Grid item xs={8}>
               <div>

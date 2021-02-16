@@ -8,6 +8,7 @@ import PrivateRoute from './privateRoute';
 import Main from '../pages/main';
 import EosMain from '../pages/eosMain';
 import CordaMain from '../pages/cordaMain'
+import CordaOrg from '../pages/cordaOrg'
 import SignUp from '../pages/signup';
 import history from './history';
 
@@ -21,6 +22,7 @@ class RouteModule extends React.Component {
             <PrivateRoute exact path="/eth-eth" component={Main} />
             <PrivateRoute exact path="/eth-eos" component={EosMain} />
             <PrivateRoute exact path="/corda" component={CordaMain} />
+            <PrivateRoute exact path="/corda-org" component={CordaOrg} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
             <Route component={NotFoundPage} />

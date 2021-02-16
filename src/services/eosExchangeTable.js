@@ -94,7 +94,10 @@ export const findByPubKey = async (key)=>{
         
         const data = await contract.methods.exchangeFromId(iterator.corresponding_id).call();
         if(Number(data.status) ==0){
-          iterator.statusMsg = 'NEED_TO_CLAIM'
+          iterator.statusMsg = 'PROCESSED'
+          if(data.callbackStatus === 'claimSent'){
+            iterator.msg = 'Claim request sent. Waiting for confirmation.'
+          }
         }
         if(Number(data.status) ==1){
           iterator.statusMsg = 'SUCCESSFUL'

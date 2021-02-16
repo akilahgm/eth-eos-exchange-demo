@@ -60,6 +60,40 @@ export const buyShares = async (
   console.log('Result', resp.data);
   return resp.data.result ? resp.data.result : null;
 };
+export const getAllExchanges = async ()=>{
+  web3.setProvider(
+    new web3.providers.HttpProvider(
+      'https://rinkeby.infura.io/v3/98079c61ec6a4c029817d276104753d3',
+    ),
+  );
+  var contractAddress = cordaEscrowContractAddress;
+  var contract = new web3.eth.Contract(cordaEscrowABI, contractAddress);
+  const ids = await contract.methods.getAllExchangeIds().call();
+  console.log('Ids-----',ids)
+  const results = [];
+  for (const iterator of ids) {
+    const res = await contract.methods.exchangeFromId(iterator).call();
+    if (res.status == '0') {
+      res.statusMsg = 'PENDING';
+    }
+    if (res.status == '1') {
+      res.statusMsg = 'SUCCESSFUL';
+    }
+    if (res.status == '2') {
+      res.statusMsg = 'REFUND REQUESTING';
+    }
+    if (res.status == '3') {
+      res.statusMsg = 'REFUNDED';
+    }
+    results.push(res);
+  }
+  return results;
+}
+
+export const getOrgAvailableStockBalance = async()=>{
+  const {data} = await axios.get('http://20.42.117.153:10009/api/available-tokens?symbol=fyp')
+  return data
+}
 
 export const getExchanges = async (accountAddress) => {
   web3.setProvider(

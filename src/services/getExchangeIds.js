@@ -24,7 +24,6 @@ export const getExchangeIds = async (escrowAddress, walletPubKey) => {
         network2 = network.name;
       }
     }
-    console.log('*********************')
   web3.setProvider(
     new web3.providers.HttpProvider(
       `https://${network1}.infura.io/v3/98079c61ec6a4c029817d276104753d3`
@@ -49,7 +48,6 @@ export const getExchangeIds = async (escrowAddress, walletPubKey) => {
   const claim = [];
   for (const exchangeId of exchangeIds) {
     const res = await contract.methods.exchangeFromId(exchangeId).call();
-    console.log('RES1',res)
     const temp = {
       status: res.status,
       correspondingId: res.correspondingId,
@@ -85,7 +83,7 @@ export const getExchangeIds = async (escrowAddress, walletPubKey) => {
         .call();
         console.log('RES2',res2)
       if (Number(res2.status) == 0) {
-        temp.statusMsg = 'NEED_TO_CLAIM';
+        temp.statusMsg = 'PROCESSED';
         if(res2.callbackStatus === 'claimSent'){
           temp.msg = 'Claim request sent. Waiting for confirmation.'
         }
@@ -133,14 +131,11 @@ export const getEthExchanges = async (walletPubKey) => {
   );
   
   var contract = new web3.eth.Contract(EOSEscrowABI, eosExchangeEthEscrow.address);
-  console.log('Comes here++++++++++++++++++++++++++++++++++++++')
   const exchangeIds = await contract.methods
     .getExchangeIds(walletPubKey)
     .call();
-    console.log('Exchnage ids',exchangeIds)
   const claim = [];
   for (const exchangeId of exchangeIds) {
-    
     const res = await contract.methods.exchangeFromId(exchangeId).call();
     console.log('res',res)
     const temp = {
@@ -175,10 +170,10 @@ export const getEthExchanges = async (walletPubKey) => {
       const data = await findByExchangeKey(res.correspondingId)
       
       if(Number(data.status) ==0){
-        temp.statusMsg = 'NEED_TO_CLAIM'
-        // if(data.callbackStatus === 'claimSent'){
-        //   temp.msg = 'Claim request sent. Waiting for confirmation.'
-        // }
+        temp.statusMsg = 'PROCESSED'
+        if(data.callbackStatus === 'claimSent'){
+          temp.msg = 'Claim request sent. Waiting for confirmation.'
+        }
       }
       if(Number(data.status) ==1){
         temp.statusMsg = 'SUCCESSFUL'

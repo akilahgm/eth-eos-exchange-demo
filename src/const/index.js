@@ -1,24 +1,26 @@
-export const eosExchangableEscrow = '0xFc98772F21aF15A3af8f56B97CAF3D35168Ab5c8';
 
 export const eosExchangeEthEscrow = {
-    address:'0xFc98772F21aF15A3af8f56B97CAF3D35168Ab5c8',
+    address:'0x2dC94B9bAB7d7e6eea2566ad4a771a0B589C1124',
     network:'ropsten',
     transferHash:'Qmc1CYh73qGEBWkdATxmWBDbjaq79SQYutsghrhALDzLw1',
-    claimHash:'QmUDEe7S78JBhXgsXYwqtbhZrUT5CTfwNBPWGDJAmvzzuj',
-    refundHash:'QmcxBzk8xuKVk1EbPTf6CfMcpkcyfgLtimCufCbaUPX1jh'
+    claimHash:'QmVeFJk1twy5RU6omYkmEzBQ8vSpJDE79n6YjTGWKuNEhg',
+    refundHash:'QmPtP7vZqwapK8ExiRtMCKBQRm83sAmYGXAZsBULXUFoJD',
+    readHash:'QmdGcK9UrMEuuuJtvnsj3vGXEBJz3fYVGXG9Rn7e322MDK',
+    claimFromEosHash:'QmUDEe7S78JBhXgsXYwqtbhZrUT5CTfwNBPWGDJAmvzzuj',
+    refundFromEosHash:'QmcxBzk8xuKVk1EbPTf6CfMcpkcyfgLtimCufCbaUPX1jh'
 }
 
 export const eosExchangableToken = '0x497cA4BE7Ff0e665D4380c987FFfA40dE7e9846d';
 
-export const cordaEscrowContractAddress = '0x2BABb3ea68799Ddcb223bB008543210d8a98C8c7';
+export const cordaEscrowContractAddress = '0xbC750Ac25bB2dD32f050565399F7803a1BD73D55';
 
 export const eosOwner = "fypeostest15"
 export const eosEndpoint ='https://eos.dfuse.eosnation.io'
 //https://kylin.eosn.io
 
 export const networks = {
-    ropsten:'0x2c0afd7eBfB625d73c5535D9A9bf4D843f588EC3',
-    rinkeby:'0xDF2C46Fdb4cAc5C98338c1366FD72ed11749952a'
+    ropsten:'0xa241DAF42b3f46DB547fa7f3aFA121Dfaef6503E',
+    rinkeby:'0x6c87F65eBC116E2c0db94Ab705589C4221A30Eb5'
 }
 
 export const networkList = [

@@ -94,7 +94,7 @@ export const claim = async (privateKey, senderEosKey, exchangeId) => {
             data: {
               exchange_id: exchangeId,
               escrow_address: eosExchangeEthEscrow.address,
-              ipfs_hash: eosExchangeEthEscrow.claimHash,
+              ipfs_hash: eosExchangeEthEscrow.claimFromEosHash,
             },
           },
         ],
@@ -105,6 +105,7 @@ export const claim = async (privateKey, senderEosKey, exchangeId) => {
       }
     );
     console.log('Result ->', result);
+    return `https://bloks.io/transaction/${result.transaction_id}`
   } catch (err) {
     console.log('Error happen', err);
   }
@@ -157,7 +158,7 @@ export const eosRefund = async (privateKey, senderEosKey, exchangeId) => {
             data: {
               exchange_id: exchangeId,
               escrow_address: eosExchangeEthEscrow.address,
-              ipfs_hash: eosExchangeEthEscrow.refundHash,
+              ipfs_hash: eosExchangeEthEscrow.refundFromEosHash,
             },
           },
         ],
@@ -168,7 +169,9 @@ export const eosRefund = async (privateKey, senderEosKey, exchangeId) => {
       }
     );
     console.log('Result ->', result);
+    return `https://bloks.io/transaction/${result.transaction_id}`
   } catch (err) {
     console.log('Error happen', err);
+    return ''
   }
 };

@@ -84,7 +84,7 @@ export const EosEthClaimListView = ({ claim, network }) => {
         <Grid item xs={6}>
           Expecting amount : {network === 'EOS'?(claim.other_value)/(10**18):claim.expectedAsset}
         </Grid>
-        {claim.statusMsg === 'NEED_TO_CLAIM'?(
+        {claim.statusMsg === 'PROCESSED'?(
           <>
         <Grid item xs={8}>
           <div>
